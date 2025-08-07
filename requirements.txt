@@ -1,2 +1,10 @@
-flask
-gunicorn
+Flask==2.2.5
+pyttsx3==2.90
+SpeechRecognition==3.10.0
+opencv-python==4.8.1.78
+dlib==19.24.2
+imutils==0.5.4
+scipy==1.11.4
+numpy==1.25.2
+cvzone==1.5.6
+mediapipe==0.10.3
