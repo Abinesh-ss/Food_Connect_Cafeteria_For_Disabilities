@@ -7,4 +7,4 @@ imutils==0.5.4
 scipy==1.11.4
 numpy==1.25.2
 cvzone==1.5.6
-mediapipe==0.10.3
+mediapipe==0.10.5
