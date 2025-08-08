@@ -3,4 +3,4 @@ services:
     name: assistive-app
     env: python
     buildCommand: pip install -r requirements.txt
-    startCommand: python myapp.py
+    startCommand: python app.py
