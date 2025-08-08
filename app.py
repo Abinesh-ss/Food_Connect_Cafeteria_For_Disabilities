@@ -89,6 +89,22 @@ def step_3():
 def step_2_hand():
     return render_template('step_2_hand.html')
 
+@app.route('/process_image', methods=['POST'])
+def process_image():
+    data = request.get_json()
+    image_data = data['image'].split(',')[1]
+    decoded = base64.b64decode(image_data)
+    np_data = np.frombuffer(decoded, np.uint8)
+    img = cv2.imdecode(np_data, cv2.IMREAD_COLOR)
+
+    # Example processing
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    edges = cv2.Canny(gray, 50, 150)
+
+    return jsonify({'result': 'Image processed successfully'})
+
+
+
 
 def calculate_EAR(eye): 
 
@@ -207,3 +223,4 @@ def send_mail(Name,Email,drink):
     
 if __name__ == '__main__':
     app.run(debug=True)
+
