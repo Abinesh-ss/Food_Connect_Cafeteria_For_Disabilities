@@ -1,9 +1,7 @@
 Flask
+gunicorn
+mediapipe
 opencv-python
-dlib
+nltk
 imutils
 cvzone
-numpy
-SpeechRecognition
-pyttsx3
-scipy
