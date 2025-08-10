@@ -5,3 +5,5 @@ nltk
 imutils
 cvzone
 pyttsx3
+SpeechRecognition
+
