@@ -10,7 +10,6 @@ from imutils import face_utils
 import time
 import smtplib
 from cvzone.HandTrackingModule import HandDetector 
-import mediapipe as mp
 import numpy as np
 
 
@@ -223,4 +222,5 @@ def send_mail(Name,Email,drink):
     
 if __name__ == '__main__':
     app.run(debug=True)
+
 
