@@ -1,24 +1,32 @@
-# Use official Python base image
-FROM python:3.11-slim
+FROM python:3.10-slim
+
+# Install system dependencies for mediapipe & dlib
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    cmake \
+    libboost-all-dev \
+    libopenblas-dev \
+    liblapack-dev \
+    libx11-dev \
+    libgtk2.0-dev \
+    libgl1-mesa-glx \
+    libglib2.0-0 \
+    && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
 WORKDIR /app
 
-# Copy all files
+# Copy requirements first (to cache pip install layer)
+COPY requirements.txt .
+
+# Install Python dependencies without cache
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy project files
 COPY . .
 
-# Install system dependencies for MediaPipe
-RUN apt-get update && apt-get install -y \
-    ffmpeg \
-    libgl1 \
-    && rm -rf /var/lib/apt/lists/*
+# Expose port for Render
+EXPOSE 10000
 
-# Install Python dependencies
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
-
-# Expose the port used by Flask
-EXPOSE 7860
-
-# Run the app
-CMD ["python", "app.py"]
+# Start the Flask app with Gunicorn
+CMD ["gunicorn", "flask.app:app", "-b", "0.0.0.0:10000"]
