@@ -1,6 +1,10 @@
 services:
   - type: web
-    name: assistive-app
+    name: flask-app
     env: python
-    buildCommand: pip install -r requirements.txt
-    startCommand: python app.py
+    plan: free
+    buildCommand: |
+      apt-get update && apt-get install -y cmake libboost-all-dev libopenblas-dev
+      pip install --upgrade pip
+      pip install -r requirements.txt
+    startCommand: gunicorn app:app
