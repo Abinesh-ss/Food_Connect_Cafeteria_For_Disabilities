@@ -4,3 +4,4 @@ opencv-python
 nltk
 imutils
 cvzone
+pyttsx3
