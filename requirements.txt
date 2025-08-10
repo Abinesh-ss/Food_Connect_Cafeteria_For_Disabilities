@@ -1,6 +1,5 @@
 Flask
 gunicorn
-mediapipe==0.10.14 --only-binary=:all:
 opencv-python
 nltk
 imutils
