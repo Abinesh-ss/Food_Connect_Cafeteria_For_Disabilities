@@ -3,7 +3,6 @@ import pyttsx3
 import speech_recognition as sr
 from threading import Thread
 import cv2
-import dlib 
 import imutils 
 from scipy.spatial import distance as dist 
 from imutils import face_utils 
@@ -222,5 +221,6 @@ def send_mail(Name,Email,drink):
     
 if __name__ == '__main__':
     app.run(debug=True)
+
 
 
