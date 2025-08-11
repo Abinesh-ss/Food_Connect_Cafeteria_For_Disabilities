@@ -1,4 +1,5 @@
 Flask
+gunicorn
 cvzone
 opencv-python
 numpy
