@@ -1,10 +1,8 @@
 Flask
-gunicorn
-mediapipe
+cvzone
+opencv-python
+numpy
+scipy
+imutils
 pyttsx3
 SpeechRecognition
-opencv-python
-imutils
-scipy
-numpy
-cvzone
