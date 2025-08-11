@@ -8,3 +8,4 @@ scipy
 imutils
 pyttsx3
 SpeechRecognition
+cvzone==1.6.1
