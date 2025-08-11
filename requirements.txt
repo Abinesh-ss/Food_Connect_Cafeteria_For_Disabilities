@@ -1,5 +1,6 @@
 Flask
 gunicorn
+mediapipe
 pyttsx3
 SpeechRecognition
 opencv-python
