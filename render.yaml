@@ -3,9 +3,11 @@ services:
     name: flask-app
     env: python
     plan: free
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10
     buildCommand: |
       apt-get update && apt-get install -y ffmpeg libgl1-mesa-glx libglib2.0-0
       pip install --upgrade pip
-      pip install mediapipe==0.10.14 protobuf<5
       pip install -r requirements.txt
     startCommand: gunicorn app:app
