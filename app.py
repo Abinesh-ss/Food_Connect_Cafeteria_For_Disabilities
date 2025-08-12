@@ -14,6 +14,7 @@ import numpy as np
 
 
 app = Flask(__name__)
+app.config['DEBUG'] = False
 
 Name , Email = '',''
 
@@ -478,6 +479,7 @@ def send_mail(Name, Email, drink):
 
 if __name__ == '__main__':
     app.run(debug=True)
+
 
 
 
