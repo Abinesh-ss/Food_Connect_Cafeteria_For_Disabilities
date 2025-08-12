@@ -169,8 +169,7 @@ def send_mail(Name, Email, drink):
 # Render-compatible run
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port, debug=False)    
-    return render_template('step_2_voice.html')
+    app.run(host='0.0.0.0', port=port, debug=False)
 
 @app.route('/disable_nd_deaf', methods=['POST'])
 def disable_nd_deaf():
@@ -307,5 +306,6 @@ def send_mail(Name, Email, drink):
 
 if __name__ == '__main__':
     app.run(debug=True)
+
 
 
