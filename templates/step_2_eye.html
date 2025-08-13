@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Step 2: Record Order</title>
+    <title>Step 2: Eye Gesture Order</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.min.js"></script>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -12,7 +13,7 @@
             background-color: #f2f2f2;
             display: flex;
             justify-content: center; 
-            align-items:start; 
+            align-items: start; 
             height: 100vh; 
         }
         .container {
@@ -35,18 +36,17 @@
         .highlight {
             color: #007bff; 
         }
-        button {
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            padding: 12px 24px;
+        #camera {
+            width: 320px;
+            height: 240px;
+            margin: auto;
+            border: 2px solid #ccc;
             border-radius: 5px;
-            cursor: pointer;
-            font-size: 18px;
-            margin-top: 20px;
         }
-        button:hover {
-            background-color: #0056b3;
+        #status {
+            margin-top: 15px;
+            font-size: 16px;
+            color: #444;
         }
     </style>
 </head>
@@ -56,21 +56,51 @@
         <p><span class="highlight">MAKE YOUR ORDER THROUGH EYE GESTURES</span></p>
         <p>If you want <span class="highlight">TEA</span>, blink <span class="highlight">1 TIME</span></p>
         <p>If you want <span class="highlight">COFFEE</span>, blink <span class="highlight">2 TIMES</span></p>
-        <form action="/eye_gesture" method="post">
-            <button id="nextStep2">MAKE ORDER</button>
-        </form>
+        <div id="camera"></div>
+        <div id="status">Initializing camera...</div>
     </div>
+
     <script>
-        setTimeout(()=>{
-            const btn = document.getElementById('nextStep2');
-            btn.click();
-        },15000);
+        // Attach speech synthesis greeting
         setTimeout(()=>{
             const synth = window.speechSynthesis;
             let text = "System is ready to detect your eye blinking";
             const utterThis = new SpeechSynthesisUtterance(text);
             synth.speak(utterThis);
         },2000);
+
+        // Configure webcam
+        Webcam.set({
+            width: 320,
+            height: 240,
+            image_format: 'jpeg',
+            jpeg_quality: 90
+        });
+        Webcam.attach('#camera');
+
+        // Function to capture and send image
+        function captureAndSend() {
+            Webcam.snap(function(data_uri) {
+                fetch('/process_eye_image', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ image: data_uri })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById('status').innerText = "Blinks detected: " + data.blinks;
+                    if (data.blinks === 1) {
+                        window.location.href = "/step_3.html?data=TEA";
+                    } else if (data.blinks === 2) {
+                        window.location.href = "/step_3.html?data=COFFEE";
+                    }
+                })
+                .catch(err => console.error("Error:", err));
+            });
+        }
+
+        // Run every 2 seconds
+        setInterval(captureAndSend, 2000);
     </script>
 </body>
 </html>
