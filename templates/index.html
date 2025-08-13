@@ -1,162 +1,149 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>DISABILITY SUPPORTER</title>
-    <style>
-        *{
-            padding:0;
-            margin:0;
-            user-select:none;
-            cursor:pointer;
-            box-shadow:border-box;
-        }
-        body {
-            background-color: #f2f2f2; /* Set a light background color for the body */
-            font-family: Arial, sans-serif; /* Change font for better readability */
-        }
-        .main{
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-        }
-        .layer{
-            z-index:2;
-            background-color:#FFA500; /* Change background color to orange */
-            flex:0.45;
-            width:100%;
-            height:100vh;
-            display:flex;
-            justify-content:center;
-            flex-direction:column;
-            align-items:center;
-            animation: pulse 2s infinite alternate; /* Add pulsating animation */
-        }
-        @keyframes pulse {
-            0% { transform: scale(0.95); }
-            100% { transform: scale(1.05); }
-        }
-        .row{
-            z-index:3;
-            display:flex;
-            justify-content:center;
-            flex-direction:column;
-            align-items:center;
-            margin-top:-50px;
-        }
-        .double{
-            z-index:3;
-            display:flex;
-            justify-content:center;
-        }
-        .options{
-            flex:0.55;
-            width:100%;
-            background-color:#228B22; /* Change background color to green */
-            height:100vh;
-            position:relative;
-        }
-        .forms{
-            display:grid;
-            justify-content:center;
-            grid-template-columns:repeat(3,minmax(80px,200px));
-            align-items:center;
-            gap:40px;
-            position:absolute;
-            bottom:2rem;
-        }
-        form{
-            padding-left:40px;
-            border-radius:50px;
-            display:grid;
-            align-content:center;
-        }
-        input[type= "image"]{
-            border-radius:20px;
-            border: 3px solid darkgreen;
-            transition: transform 0.2s;
-            box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
-            padding:10px;
-        }
-        input[type= "image"]:hover {
-            transform: scale(1.1); 
-           
-        }
-        .home{
-            text-align:center;
-            padding: 2rem;
-        }
-        h1{
-            font-family: 'Arial Black', sans-serif; 
-            font-size:2rem;
-            color:white;
-            text-shadow:2px 4px 2px rgba(0, 0, 0, 0.5); /* Add text shadow for better visibility */
-        }
-        p{
-            font-family: Arial, sans-serif; /* Change font for paragraph */
-            color:white;
-            font-size:1.3rem;
-            padding-top:20px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DISABILITY SUPPORTER</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        user-select: none;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+    }
+
+    .main {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    .layer {
+        background-color: #FFA500;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        padding: 1rem;
+        animation: pulse 2s infinite alternate;
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(0.97); }
+        100% { transform: scale(1.03); }
+    }
+
+    .double, .row {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .options {
+        background-color: #228B22;
+        flex: 1;
+        padding: 2rem 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .home h1 {
+        color: white;
+        text-shadow: 2px 4px 2px rgba(0,0,0,0.5);
+        font-size: clamp(1.5rem, 4vw, 2.2rem);
+        text-align: center;
+    }
+
+    .home p {
+        color: white;
+        font-size: clamp(1rem, 2.5vw, 1.3rem);
+        text-align: center;
+        margin-top: 0.5rem;
+        max-width: 700px;
+    }
+
+    .forms {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(90px, 150px));
+        gap: 1rem;
+        margin-top: 2rem;
+        width: 100%;
+        justify-content: center;
+    }
+
+    input[type="image"] {
+        border-radius: 20px;
+        border: 3px solid darkgreen;
+        transition: transform 0.2s;
+        padding: 0.3rem;
+        background: white;
+        width: 100%;
+        height: auto;
+    }
+
+    input[type="image"]:hover {
+        transform: scale(1.05);
+    }
+</style>
 </head>
-    
 <body>
-   
     <div class="main">
         <div class="layer">
             <div class="double">
-                <img class="l" src="{{url_for('static',filename='/images/pentl.png')}}" alt="img" width="200px" height="200px">
-                <img class="r" src="{{url_for('static',filename='/images/pentr.png')}}" alt="img" width="200px" height="200px">
+                <img src="{{url_for('static',filename='/images/pentl.png')}}" width="150" alt="">
+                <img src="{{url_for('static',filename='/images/pentr.png')}}" width="150" alt="">
             </div>
             <div class="row">
-                <img class="c" src="{{url_for('static',filename='/images/pentc.png')}}" alt="img" width="200px" height="200px">
-                <img class="b" src="{{url_for('static',filename='/images/pentb.png')}}" alt="img" width="200px" height="200px">
+                <img src="{{url_for('static',filename='/images/pentc.png')}}" width="150" alt="">
+                <img src="{{url_for('static',filename='/images/pentb.png')}}" width="150" alt="">
             </div>
         </div>
         <div class="options">
             <div class="home">
                 <h1>Disability Supporter</h1>
-                <p>This website provides aiding support to physically challenged persons. Various support options are categorized below. Choose them as you wish.</p>
+                <p>This website provides aiding support to physically challenged persons. Choose your category below.</p>
             </div>
             <div class="forms">
                 <form action="/blind_only" method="post">
-                    <input id="btn1" type="image" src="{{url_for('static',filename='/images/Blind_only.png')}}" alt="SUBMIT"  width="120" height="120" >
+                    <input type="image" src="{{url_for('static',filename='/images/Blind_only.png')}}" alt="Blind Only">
                 </form>
-        
                 <form action="/blind_nd_dumb" method="post">
-                    <input id="btn2" type="image" src="{{url_for('static',filename='/images/Blind_&_dumb.png')}}" alt="SUBMIT"  width="120" height="120">
+                    <input type="image" src="{{url_for('static',filename='/images/Blind_&_dumb.png')}}" alt="Blind & Dumb">
                 </form>
-    
                 <form action="/disable_nd_blind" method="post">
-                    <input id="btn3" type="image" src="{{url_for('static',filename='/images/Blind_&_disable.png')}}" alt="SUBMIT"  width="120" height="120">
+                    <input type="image" src="{{url_for('static',filename='/images/Blind_&_disable.png')}}" alt="Blind & Disabled">
                 </form>
-    
                 <form action="/disable_nd_deaf" method="post">
-                    <input id="btn4" type="image" src="{{url_for('static',filename='/images/Disable_&_deaf.png')}}" alt="SUBMIT"  width="120" height="120">
+                    <input type="image" src="{{url_for('static',filename='/images/Disable_&_deaf.png')}}" alt="Disable & Deaf">
                 </form>
-    
                 <form action="/deaf_nd_dumb" method="post">
-                    <input id="btn5" type="image" src="{{url_for('static',filename='/images/Deaf_&_dumb.png')}}" alt="SUBMIT"  width="120" height="120">
+                    <input type="image" src="{{url_for('static',filename='/images/Deaf_&_dumb.png')}}" alt="Deaf & Dumb">
                 </form>
-    
                 <form action="/deaf_nd_dumb_nd_disable" method="post">
-                    <input id="btn6" type="image" src="{{url_for('static',filename='/images/Deaf_&_dumb_&_disable.png')}}" alt="SUBMIT"  width="120" height="120">
+                    <input type="image" src="{{url_for('static',filename='/images/Deaf_&_dumb_&_disable.png')}}" alt="Deaf & Dumb & Disabled">
                 </form>
             </div>
         </div>
     </div>
-    <script>
-       
-        setTimeout(()=>{
-            const synth = window.speechSynthesis;
-            let text = "blind peoples please wait. you will be automatically redirected to hand recognition there you can make your order,others choose your desired options";
-            const utterThis = new SpeechSynthesisUtterance(text);
-            synth.speak(utterThis);
-        },2000);
-        setTimeout(()=>{
-            const btn = document.getElementById('btn1');
-            btn.click();
-        },15000);
-    </script>
+
+<script>
+    setTimeout(()=>{
+        const synth = window.speechSynthesis;
+        const text = "Blind people please wait. You will be redirected to hand recognition. Others choose your desired options.";
+        const utterThis = new SpeechSynthesisUtterance(text);
+        synth.speak(utterThis);
+    },2000);
+
+    setTimeout(()=>{
+        document.querySelector('input[alt="Blind Only"]').click();
+    },15000);
+</script>
 </body>
 </html>
