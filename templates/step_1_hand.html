@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Step 1: Instructions</title>
+    <title>Step 1: Hand Gesture Order</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.min.js"></script>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Changed font to Segoe UI */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 20px;
             background-color: #f2f2f2;
@@ -18,56 +19,65 @@
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
         }
         h2 {
             color: #4CAF50; 
-            text-align: center;
             margin-bottom: 20px;
         }
-        p {
-            color: #333;
-            font-size: 18px; 
-            line-height: 1.5; 
-        }
-        ol {
-            margin-left: 30px;
-            color: #666; 
-            font-size: 16px; 
-            line-height: 1.5; 
-        }
-        button {
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            padding: 12px 24px; 
+        #camera {
+            width: 320px;
+            height: 240px;
+            margin: auto;
+            border: 2px solid #ccc;
             border-radius: 5px;
-            cursor: pointer;
-            font-size: 18px;
-            margin-top: 20px;
         }
-        button:hover {
-            background-color: #0056b3;
+        #status {
+            margin-top: 15px;
+            font-size: 16px;
+            color: #333;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2>Step 1: Instructions</h2>
-        <p>Follow the instructions below to place your order:</p>
-        <ol>
-            <li>Use hand gestures to specify your order.</li>
-            <li>Click the "Next" button to record your order.</li>
-        </ol>
-        <form action="/step_2_hand" method="post">
-            <button id="nextStep2">MAKE ORDER</button>
-        </form>
+        <h2>Show Your Hand Gesture</h2>
+        <div id="camera"></div>
+        <div id="status">Detecting gesture...</div>
     </div>
+
+    <script>
+        // Configure webcam
+        Webcam.set({
+            width: 320,
+            height: 240,
+            image_format: 'jpeg',
+            jpeg_quality: 90
+        });
+        Webcam.attach('#camera');
+
+        // Capture frame every 2 seconds and send to backend
+        function captureAndSend() {
+            Webcam.snap(function(data_uri) {
+                fetch('/process_hand_image', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ image: data_uri })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    console.log("Gesture detected:", data.result);
+                    document.getElementById('status').innerText = "Gesture: " + data.result;
+                    if (data.result === "TEA" || data.result === "COFFEE") {
+                        window.location.href = "/step_3.html?data=" + data.result;
+                    }
+                })
+                .catch(err => console.error("Error:", err));
+            });
+        }
+
+        // Start checking every 2 seconds
+        setInterval(captureAndSend, 2000);
+    </script>
 </body>
-<script>
-    setTimeout(()=>{
-        //window.location.href = "/step_2_hand";
-        const btn = document.getElementById('nextStep2');
-        btn.click();
-    },15000);
-</script>
 </html>
