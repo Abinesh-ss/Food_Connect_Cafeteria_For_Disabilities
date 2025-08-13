@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Step 2: Record Order</title>
+    <title>Step 2: Voice Order</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Added font style */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 20px;
             background-color: #f2f2f2;
             display: flex;
-            justify-content: center; /* Centering content horizontally */
-            align-items: start; /* Centering content vertically */
-            height: 100vh; /* Making the body take full viewport height */
+            justify-content: center;
+            align-items: start;
+            height: 100vh;
         }
         .container {
             width: 700px;
@@ -21,17 +21,17 @@
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center; /* Centering text */
+            text-align: center;
         }
         h2 {
-            color: #007bff; /* Changed heading color */
+            color: #007bff;
             margin-bottom: 20px;
         }
         p {
             color: #333;
             font-size: 18px;
             line-height: 1.5;
-            margin-bottom: 10px; /* Added spacing between paragraphs */
+            margin-bottom: 10px;
         }
         button {
             background-color: #007bff;
@@ -46,23 +46,55 @@
         button:hover {
             background-color: #0056b3;
         }
+        #status {
+            margin-top: 15px;
+            font-size: 16px;
+            color: #444;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2>Step 2: Record Order</h2>
-        <p><span style="font-style: italic;">MAKE YOUR ORDER THROUGH VOICE COMMAND</span></p>
-        <p>IF YOU WANT <span style="color: #FF5722; font-weight: bold;">COFFEE</span>, SAY "<span style="color: #FF5722; font-weight: bold;">COFFEE</span>"</p>
-        <p>IF YOU WANT <span style="color: #4CAF50; font-weight: bold;">TEA</span>, SAY "<span style="color: #4CAF50; font-weight: bold;">TEA</span>"</p>
-        <form action="/voice_front" method="post">
-            <button id="nextStep2">MAKE ORDER</button>
-        </form>
+        <h2>Step 2: Voice Order</h2>
+        <p><em>MAKE YOUR ORDER THROUGH VOICE COMMAND</em></p>
+        <p>If you want <span style="color: #FF5722; font-weight: bold;">COFFEE</span>, say "<span style="color: #FF5722; font-weight: bold;">coffee</span>"</p>
+        <p>If you want <span style="color: #4CAF50; font-weight: bold;">TEA</span>, say "<span style="color: #4CAF50; font-weight: bold;">tea</span>"</p>
+        <button onclick="startListening()">Start Listening</button>
+        <div id="status">Click "Start Listening" and speak...</div>
     </div>
+
     <script>
-        setTimeout(()=>{
-            const btn = document.getElementById('nextStep2');
-            btn.click();
-        },15000);
+        function startListening() {
+            if (!('webkitSpeechRecognition' in window)) {
+                document.getElementById('status').innerText = "Speech recognition not supported in this browser.";
+                return;
+            }
+
+            const recognition = new webkitSpeechRecognition();
+            recognition.lang = 'en-US';
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+
+            recognition.start();
+            document.getElementById('status').innerText = "Listening... Please speak your order.";
+
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript.toLowerCase();
+                document.getElementById('status').innerText = "You said: " + transcript;
+
+                if (transcript.includes("coffee")) {
+                    window.location.href = "/step_3.html?data=COFFEE";
+                } else if (transcript.includes("tea")) {
+                    window.location.href = "/step_3.html?data=TEA";
+                } else {
+                    document.getElementById('status').innerText = "Could not detect a valid order. Please try again.";
+                }
+            };
+
+            recognition.onerror = function() {
+                document.getElementById('status').innerText = "Error capturing voice. Please try again.";
+            };
+        }
     </script>
 </body>
 </html>
