@@ -30,12 +30,16 @@
         align-items: center;
         flex-wrap: wrap;
         padding: 1rem;
-        animation: pulse 2s infinite alternate;
     }
 
-    @keyframes pulse {
-        0% { transform: scale(0.97); }
-        100% { transform: scale(1.03); }
+    /* Zoom in/out animation for images only */
+    .layer img {
+        animation: zoomInOut 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes zoomInOut {
+        0% { transform: scale(1); }
+        100% { transform: scale(1.08); }
     }
 
     .double, .row {
@@ -108,7 +112,8 @@
         <div class="options">
             <div class="home">
                 <h1>Disability Supporter</h1>
-                <p>This website provides aiding support to physically challenged persons. Choose your category below.</p>
+                <p>AID FOR SPECIALLY ABLED PEOPLES.</p>
+                <p>NEXT PAGE IS AUTOMATICALLY DIRECTED FOR BLIND PEOPLES OTHERS CHOOSE ACCORDINGLY</p>
             </div>
             <div class="forms">
                 <form action="/blind_only" method="post">
